@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCart } from "@/store/useCart";
 import { ArrowRight, ShoppingCart, Heart, Star, Shield, HelpCircle, Sparkles } from "lucide-react";
 import TopSellingSlider from "@/components/TopSellingSlider";
+import CustomerFeedback from "@/components/CustomerFeedback";
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -227,22 +228,33 @@ export default function Home() {
       {/* 5. Triple Side-by-Side Collection Banners */}
       <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
-          { title: "Natural Teak Burl", quote: "Organic silhouettes & rich curves.", bg: "bg-[#F4EFEB]" },
-          { title: "Ancient Bog Oak", quote: "Dark, moody fossils from waterbeds.", bg: "bg-[#EAECE6]" },
-          { title: "Satinwood Wave", quote: "Highly reflective chatoyant lines.", bg: "bg-[#F3EFE0]" },
+          { title: "Natural Teak Burl", quote: "Organic silhouettes & rich curves.", bg: "bg-[#F4EFEB]", image: "/textures/teak_burl.png" },
+          { title: "Ancient Bog Oak", quote: "Dark, moody fossils from waterbeds.", bg: "bg-[#EAECE6]", image: "/textures/bog_oak.png" },
+          { title: "Satinwood Wave", quote: "Highly reflective chatoyant lines.", bg: "bg-[#F3EFE0]", image: "/textures/satinwood_wave.png" },
         ].map((banner, idx) => (
-          <div key={idx} className={`p-8 rounded-[2rem] border border-black/5 shadow-sm flex flex-col justify-between items-start aspect-[4/3] ${banner.bg}`}>
-            <div>
+          <div key={idx} className={`group relative p-8 rounded-[2rem] border border-black/5 shadow-sm flex flex-col justify-between items-start aspect-[4/3] ${banner.bg} overflow-hidden`}>
+            
+            {/* Background Texture Image Watermark */}
+            <img 
+              src={banner.image} 
+              alt={banner.title} 
+              className="absolute inset-0 w-full h-full object-cover opacity-12 group-hover:opacity-22 group-hover:scale-105 transition-all duration-700 pointer-events-none z-0"
+            />
+
+            <div className="relative z-10">
               <Sparkles className="w-6 h-6 text-warm-cedar mb-4" />
               <h4 className="font-serif text-xl font-bold text-[#261B14]">{banner.title}</h4>
               <p className="font-sans text-xs text-black/60 mt-2 leading-relaxed">{banner.quote}</p>
             </div>
-            <Link href="/gallery" className="text-xs font-bold text-warm-cedar uppercase tracking-wider inline-flex items-center gap-2 hover:text-[#261B14] transition-colors mt-6">
+            <Link href="/gallery" className="relative z-10 text-xs font-bold text-warm-cedar uppercase tracking-wider inline-flex items-center gap-2 hover:text-[#261B14] transition-colors mt-6">
               View Catalog <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         ))}
       </section>
+
+      {/* 6. Customer Feedbacks Testimonial Slider */}
+      <CustomerFeedback />
     </div>
   );
 }
