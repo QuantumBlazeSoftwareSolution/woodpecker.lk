@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/store/useCart";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight, ShoppingCart, Award } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 
 interface ProductSlide {
   id: string;
@@ -14,6 +14,8 @@ interface ProductSlide {
   size: string;
   description: string;
   rating: number;
+  reviewsCount: number;
+  soldCount: string;
   image: string;
   specs: { label: string; value: string }[];
 }
@@ -27,6 +29,8 @@ const slideData: ProductSlide[] = [
     size: "24\" x 8\" x 6\"",
     description: "Sleek floating shelf unit crafted from solid teak, finished in pure gallery-white lacquer. Perfect for minimalist styling.",
     rating: 5,
+    reviewsCount: 142,
+    soldCount: "280+",
     image: "/top-selling-items/322-3220659_afydecor-contemporary-wall-shelf-in-white-shelf.png",
     specs: [
       { label: "Timber Origin", value: "Sustainably grown teak" },
@@ -43,6 +47,8 @@ const slideData: ProductSlide[] = [
     size: "30\" x 24\" x 7\"",
     description: "Clean Nordic design featuring interlocking light pine shelves. Built for plant styling and books with invisible mounts.",
     rating: 5,
+    reviewsCount: 98,
+    soldCount: "190+",
     image: "/top-selling-items/ai-generated-wall-mounted-floating-shelves-scandinavian-modern-minimalist-style-transparent-background-isolated-image-png.webp",
     specs: [
       { label: "Timber Origin", value: "Sustainable Nordic Pine" },
@@ -59,6 +65,8 @@ const slideData: ProductSlide[] = [
     size: "36\" x 9\" x 2.5\"",
     description: "A single piece of sustainably sourced teak slab, hand-planed to expose the deep grain. Modern functional simplicity.",
     rating: 5,
+    reviewsCount: 85,
+    soldCount: "150+",
     image: "/top-selling-items/wooden-wall-shelf-offering-functionality-and-minimalist-style-with-transparent-space-png.webp",
     specs: [
       { label: "Timber Origin", value: "Reclaimed Galle Estates" },
@@ -75,6 +83,8 @@ const slideData: ProductSlide[] = [
     size: "42\" x 36\" x 5.5\"",
     description: "A modular cluster of hexagonal shelves crafted from premium mahogany. Creates a beautiful geometric pattern on empty walls.",
     rating: 5,
+    reviewsCount: 112,
+    soldCount: "230+",
     image: "/top-selling-items/decorative-wooden-hexagonal-shelves-arranged-creatively-on-a-white-background-png.webp",
     specs: [
       { label: "Timber Origin", value: "Sri Lankan Mahogany" },
@@ -91,6 +101,8 @@ const slideData: ProductSlide[] = [
     size: "32\" x 34\" x 30\"",
     description: "Organic luxury accent chair featuring hand-shaped ashwood frame and textured bouclé upholstery. A statement of woodcraft design.",
     rating: 5,
+    reviewsCount: 34,
+    soldCount: "45+",
     image: "/top-selling-items/ai-generated-armchair-furniture-isolated-on-transparent-background-free-png (1).webp",
     specs: [
       { label: "Timber Origin", value: "Grade-A Ashwood" },
@@ -115,30 +127,21 @@ export default function TopSellingSlider() {
     setCurrent((prev) => (prev - 1 + slideData.length) % slideData.length);
   };
 
+  const handleOrder = () => {
+    const siteUrl = typeof window !== "undefined" ? window.location.origin : "https://woodpecker.lk";
+    const imageUrl = `${siteUrl}${active.image}`;
+    const message = `Hello Woodpecker! I would like to order:\n\n*Product:* ${active.name}\n*Price:* $${active.price}\n*Wood Type:* ${active.woodType}\n*Size:* ${active.size}\n*Image Link:* ${imageUrl}`;
+    const whatsappUrl = `https://wa.me/94788056838?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section className="relative w-full min-h-screen bg-[radial-gradient(circle_at_center,_#20150F_0%,_#0B0B0B_100%)] text-white overflow-hidden flex flex-col justify-between p-6 md:p-12 z-10">
       
       {/* Radial overlay glow block */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_40%,_rgba(0,0,0,0.5)_100%)] pointer-events-none" />
 
-      {/* Header Row */}
-      <div className="relative z-10 w-full flex justify-between items-center pb-4 border-b border-white/5">
-        <div>
-          <span className="font-sans text-[9px] text-[#C47A46] uppercase tracking-[0.25em] font-bold">
-            Curated Exhibition
-          </span>
-          <h2 className="font-serif text-lg font-bold tracking-widest text-[#FDFBF7] uppercase">
-            Top Selling Products
-          </h2>
-        </div>
-        <div className="flex items-center gap-2 text-white/50 text-[10px] uppercase tracking-widest font-semibold font-sans">
-          <span>0{current + 1}</span>
-          <div className="w-10 h-[1px] bg-white/20" />
-          <span>0{slideData.length}</span>
-        </div>
-      </div>
-
-      {/* Main Grid Content */}
+      {/* Main Content Area */}
       <div className="relative z-10 flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full my-auto py-12 lg:py-0">
         
         <div className="relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-0">
@@ -165,15 +168,24 @@ export default function TopSellingSlider() {
                       <Star key={i} className="w-4 h-4 fill-[#C47A46] text-[#C47A46]" />
                     ))}
                   </div>
+                  <span className="font-sans text-xs text-white/40 font-medium">
+                    ({active.reviewsCount} reviews)
+                  </span>
                 </div>
 
                 <p className="font-sans text-xs md:text-sm text-white/60 leading-relaxed">
                   {active.description}
                 </p>
 
-                <div className="pt-2">
-                  <span className="font-sans text-[9px] uppercase tracking-wider text-white/40 block">Investment Value</span>
-                  <span className="font-serif text-3xl font-extrabold text-[#C47A46]">${active.price.toLocaleString()}</span>
+                <div className="flex justify-between items-end pt-2 border-t border-white/5">
+                  <div>
+                    <span className="font-sans text-[9px] uppercase tracking-wider text-white/40 block">Investment Value</span>
+                    <span className="font-serif text-3xl font-extrabold text-[#C47A46]">${active.price.toLocaleString()}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-sans text-[9px] uppercase tracking-wider text-white/40 block">Demand</span>
+                    <span className="font-sans text-sm font-bold text-[#C47A46]">{active.soldCount} sold</span>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -261,17 +273,10 @@ export default function TopSellingSlider() {
                 </ul>
 
                 <button
-                  onClick={() => addToCart({
-                    id: active.id,
-                    name: active.name,
-                    price: active.price,
-                    woodType: active.woodType.split("&")[0].trim(),
-                    size: active.size,
-                    image: active.image,
-                  })}
+                  onClick={handleOrder}
                   className="w-full bg-[#C47A46] text-white flex items-center justify-center gap-3 font-sans text-xs font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-white hover:text-black transition-all cursor-pointer shadow-lg"
                 >
-                  <ShoppingCart className="w-4 h-4" /> Acquire Relic
+                  <ShoppingCart className="w-4 h-4" /> Order Now
                 </button>
               </motion.div>
             </AnimatePresence>
@@ -281,14 +286,7 @@ export default function TopSellingSlider() {
       </div>
 
       {/* Footer Navigation Row */}
-      <div className="relative z-10 w-full flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-white/5 gap-4">
-        
-        {/* Left Footer Content */}
-        <div className="flex items-center gap-2 text-white/40 text-[10px] font-sans">
-          <Award className="w-4 h-4 text-[#C47A46]" />
-          <span>Handcrafted Certificate & Artisan Signature Included</span>
-        </div>
-
+      <div className="relative z-10 w-full flex justify-center items-center pt-4">
         {/* Center: Slide Selector Arrow and Thumbnail Dots */}
         <div className="flex items-center gap-4">
           <button
@@ -319,14 +317,6 @@ export default function TopSellingSlider() {
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
-
-        {/* Right Footer Social Links */}
-        <div className="flex gap-6 text-white/45 text-[10px] font-sans tracking-wider uppercase font-bold">
-          <Link href="#" className="hover:text-[#C47A46] transition-colors">Facebook</Link>
-          <Link href="#" className="hover:text-[#C47A46] transition-colors">Instagram</Link>
-          <Link href="#" className="hover:text-[#C47A46] transition-colors">Pinterest</Link>
-        </div>
-
       </div>
 
     </section>
