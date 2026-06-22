@@ -216,13 +216,7 @@ export default function TopSellingSlider() {
                 <motion.div
                   key={slide.id}
                   style={{
-                    position: "absolute",
-                    width: "33.33%",
                     height: "100%",
-                    left: "33.33%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                   animate={{
                     x: xVal,
@@ -234,7 +228,7 @@ export default function TopSellingSlider() {
                     duration: 0.65,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="select-none pointer-events-none"
+                  className="absolute w-full lg:w-1/3 left-0 lg:left-1/3 flex items-center justify-center select-none pointer-events-none"
                 >
                   <img
                     src={slide.image}

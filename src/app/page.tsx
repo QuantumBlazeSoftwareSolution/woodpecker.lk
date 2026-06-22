@@ -53,7 +53,7 @@ export default function Home() {
     <div className="bg-[#FDFBF7] overflow-hidden w-full text-[#261B14] pt-28">
       
       {/* 1. Immersive Hero Slider / Banner (Matching Naturya Layout) */}
-      <section className="relative w-full aspect-[21/9] md:h-[75vh] flex items-center justify-start overflow-hidden bg-[#F5F2EB]">
+      <section className="relative w-full min-h-[500px] md:min-h-0 md:h-[75vh] flex items-center justify-start overflow-hidden bg-[#F5F2EB]">
         {/* Background Image: High-End Living Room with Art Panel */}
         <img
           src="/images/hero_interior.png"
@@ -64,14 +64,14 @@ export default function Home() {
 
         {/* Content Box Overlaid */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
-          <div className="max-w-2xl bg-white/95 backdrop-blur p-8 md:p-12 rounded-[2rem] shadow-2xl border border-black/5">
+          <div className="max-w-2xl bg-white/95 backdrop-blur p-6 sm:p-8 md:p-12 rounded-[2rem] shadow-2xl border border-black/5">
             <span className="font-sans text-[10px] text-warm-cedar uppercase tracking-[0.25em] font-bold block mb-3">
               TIMELESS ELEGANCE
             </span>
-            <h1 className="font-serif text-3xl md:text-5xl font-extrabold leading-tight text-[#261B14] mb-4">
+            <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-extrabold leading-tight text-[#261B14] mb-4">
               Classic Wood Wall Art Crafted for Premium Spaces
             </h1>
-            <p className="font-sans text-xs md:text-sm text-black/60 leading-relaxed mb-6">
+            <p className="font-sans text-xs sm:text-sm text-black/60 leading-relaxed mb-6">
               Hand-chiselled masterpieces sourced from sustainably reclaimed Sri Lankan timbers. Designed to bring organic energy, acoustic dampening, and sculptural beauty to modern walls.
             </p>
             <Link
@@ -116,7 +116,7 @@ export default function Home() {
         <div className="lg:col-span-7 flex flex-col gap-8">
           
           {/* Card 1 */}
-          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 aspect-[16/7] grid grid-cols-12 shadow-sm">
+          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 min-h-[180px] sm:min-h-0 sm:aspect-[16/7] grid grid-cols-12 shadow-sm">
             <div className="col-span-12 sm:col-span-7 p-6 md:p-8 flex flex-col justify-center items-start z-10">
               <span className="text-[10px] text-warm-cedar uppercase tracking-wider font-bold">KINTSUGI RELIC SERIES</span>
               <h3 className="font-serif text-2xl font-bold text-[#261B14] mt-2 mb-4">Charred Carbon & Gold Infusions</h3>
@@ -130,7 +130,7 @@ export default function Home() {
           </div>
 
           {/* Card 2 */}
-          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 aspect-[16/7] grid grid-cols-12 shadow-sm">
+          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 min-h-[180px] sm:min-h-0 sm:aspect-[16/7] grid grid-cols-12 shadow-sm">
             <div className="col-span-12 sm:col-span-7 p-6 md:p-8 flex flex-col justify-center items-start z-10">
               <span className="text-[10px] text-warm-cedar uppercase tracking-wider font-bold">MINIMAL OAK</span>
               <h3 className="font-serif text-2xl font-bold text-[#261B14] mt-2 mb-4">Bleached White Relief Waves</h3>
@@ -146,7 +146,7 @@ export default function Home() {
         </div>
 
         {/* Right Column: Tall vertical banner */}
-        <div className="lg:col-span-5 relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 p-8 flex flex-col justify-end items-start shadow-sm aspect-[4/5] lg:aspect-auto">
+        <div className="lg:col-span-5 relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 p-8 flex flex-col justify-end items-start shadow-sm min-h-[350px] sm:min-h-0 sm:aspect-[4/5] lg:aspect-auto">
           <img src="/images/product_brown.png" alt="Natural teak" className="absolute inset-0 w-full h-full object-cover opacity-80" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
           

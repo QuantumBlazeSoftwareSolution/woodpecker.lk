@@ -14,26 +14,18 @@ export default function WelcomeSplash() {
   useEffect(() => {
     setMounted(true);
     
-    // Check if splash already played in this session to prevent repetitive interruptions
-    const hasPlayed = sessionStorage.getItem("woodpecker_splash_played");
-    if (hasPlayed) {
-      completeSplash();
-      return;
-    }
-
-    // Play splash intro
+    // Play splash intro on every hard load
     startSplash();
 
-    // 1. Let the center 3D rotate and scale play for 2.2 seconds
+    // 1. Let the center 3D rotate and scale play for 3.5 seconds
     const exitTimer = setTimeout(() => {
       exitSplash();
-    }, 2200);
+    }, 3500);
 
-    // 2. Complete splash and save state 0.8 seconds later (3.0 seconds total)
+    // 2. Complete splash 1.0 second later (4.5 seconds total)
     const completeTimer = setTimeout(() => {
       completeSplash();
-      sessionStorage.setItem("woodpecker_splash_played", "true");
-    }, 3000);
+    }, 4500);
 
     return () => {
       clearTimeout(exitTimer);
