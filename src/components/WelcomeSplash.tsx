@@ -70,12 +70,23 @@ export default function WelcomeSplash() {
                   : { opacity: 1, y: 0 }
               }
               transition={{ duration: 0.8, delay: 0.1, ease: "easeInOut" }}
-              className="absolute top-[65%] flex flex-col items-center text-center"
+              className="absolute top-[74%] flex flex-col items-center text-center"
             >
-              <h1 className="font-serif text-3xl md:text-5xl font-black text-[#FDFBF7] tracking-[0.3em] uppercase leading-none mb-4">
+              <h1 
+                className="font-serif text-4xl md:text-7xl font-black tracking-[0.25em] uppercase leading-none mb-4"
+                style={{
+                  color: "#D4AF37", // Beautiful light gold/bronze
+                  textShadow: `
+                    -1px -1px 0px #FFF0C2,
+                    1px 1px 0px #4A331A,
+                    2px 2px 0px #3A2510,
+                    3px 3px 6px rgba(0, 0, 0, 0.9)
+                  ` // Premium chiseled/beveled 3D effect
+                }}
+              >
                 Woodpecker
               </h1>
-              <p className="font-sans text-[10px] md:text-xs text-warm-cedar tracking-[0.4em] uppercase font-bold">
+              <p className="font-sans text-[9px] md:text-xs text-white/50 tracking-[0.4em] uppercase font-bold mt-1">
                 Bespoke Handmade Wood Wall Art
               </p>
             </motion.div>

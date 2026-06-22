@@ -5,7 +5,7 @@ import { useCart } from "@/store/useCart";
 import { ArrowRight, ShoppingCart, Heart, Star, Shield, HelpCircle, Sparkles } from "lucide-react";
 import TopSellingSlider from "@/components/TopSellingSlider";
 import CustomerFeedback from "@/components/CustomerFeedback";
-import Hero3D from "@/components/Hero3D";
+import HeroAssembler from "@/components/HeroAssembler";
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -50,39 +50,10 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-[#FDFBF7] overflow-hidden w-full text-[#261B14] pt-28">
+    <div className="bg-[#FDFBF7] overflow-hidden w-full text-[#261B14]">
       
-      {/* 1. Immersive Hero Slider / Banner (Matching Naturya Layout) */}
-      <section className="relative w-full min-h-[500px] md:min-h-0 md:h-[75vh] flex items-center justify-start overflow-hidden bg-[#F5F2EB]">
-        {/* Background Image: High-End Living Room with Art Panel */}
-        <img
-          src="/images/hero_interior.png"
-          alt="Bespoke luxury wood art on wall"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/15 pointer-events-none" />
-
-        {/* Content Box Overlaid */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
-          <div className="max-w-2xl bg-white/95 backdrop-blur p-6 sm:p-8 md:p-12 rounded-[2rem] shadow-2xl border border-black/5">
-            <span className="font-sans text-[10px] text-warm-cedar uppercase tracking-[0.25em] font-bold block mb-3">
-              TIMELESS ELEGANCE
-            </span>
-            <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-extrabold leading-tight text-[#261B14] mb-4">
-              Classic Wood Wall Art Crafted for Premium Spaces
-            </h1>
-            <p className="font-sans text-xs sm:text-sm text-black/60 leading-relaxed mb-6">
-              Hand-chiselled masterpieces sourced from sustainably reclaimed Sri Lankan timbers. Designed to bring organic energy, acoustic dampening, and sculptural beauty to modern walls.
-            </p>
-            <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 bg-[#C47A46] text-white px-8 py-3.5 rounded-full font-sans text-xs font-bold tracking-widest uppercase hover:bg-black transition-all shadow-lg"
-            >
-              Discover Collections <ArrowRight className="w-4.5 h-4.5" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 1. Immersive Hero Assembler (Scroll-Pinned Futuristic Reveal) */}
+      <HeroAssembler />
 
       {/* 2. Explore Collections Range (Circular Roundels Section) */}
       <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto border-b border-black/5">

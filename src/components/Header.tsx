@@ -38,7 +38,7 @@ export default function Header() {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 w-full z-50 bg-[#FDFBF7] border-b border-black/5 shadow-sm transition-opacity duration-700 ease-out ${
+        className={`fixed top-0 left-0 w-full z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-black/5 shadow-sm transition-opacity duration-700 ease-out ${
           isSplashPlaying ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
@@ -109,7 +109,7 @@ export default function Header() {
         </div>
 
         {/* Bottom Row: Navigation Links (Desktop only) */}
-        <div className="hidden md:block border-t border-black/5 bg-[#FDFBF7]">
+        <div className="hidden md:block border-t border-black/5 bg-[#FDFBF7]/90 backdrop-blur-md">
           <nav className="max-w-7xl mx-auto px-6 py-2.5 flex justify-center gap-10 text-[11px] font-sans font-bold uppercase tracking-[0.2em] text-black/60">
             <Link href="/" className="hover:text-warm-cedar transition-colors">Home</Link>
             <Link href="/gallery" className="hover:text-warm-cedar transition-colors">Gallery</Link>

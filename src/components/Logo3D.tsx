@@ -123,7 +123,7 @@ export default function Logo3D({
   });
 
   return (
-    <group ref={groupRef} position={[0, 0.05, 0.3]} scale={[baseScale, -baseScale, baseScale]}>
+    <group ref={groupRef} position={[0, status === "playing" || status === "exiting" ? 0.28 : 0.05, 0.3]} scale={[baseScale, -baseScale, baseScale]}>
       {shapes.map((path, pathIndex) =>
         path.shapes.map((shape, shapeIndex) => (
           <mesh 
