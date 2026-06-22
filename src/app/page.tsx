@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/store/useCart";
 import { ArrowRight, ShoppingCart, Heart, Star, Shield, HelpCircle, Sparkles } from "lucide-react";
+import TopSellingSlider from "@/components/TopSellingSlider";
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -153,6 +154,9 @@ export default function Home() {
         </div>
 
       </section>
+
+      {/* Featured / Top Selling Products Section */}
+      <TopSellingSlider />
 
       {/* 4. New Arrivals Product Slider/Row */}
       <section className="py-20 bg-burnt-walnut/[0.02] border-t border-b border-black/5 px-6 md:px-12">
