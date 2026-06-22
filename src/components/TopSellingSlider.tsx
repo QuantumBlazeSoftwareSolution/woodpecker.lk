@@ -104,49 +104,15 @@ const slideData: ProductSlide[] = [
 export default function TopSellingSlider() {
   const { addToCart } = useCart();
   const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
 
   const active = slideData[current];
 
   const handleNext = () => {
-    setDirection(1);
     setCurrent((prev) => (prev + 1) % slideData.length);
   };
 
   const handlePrev = () => {
-    setDirection(-1);
     setCurrent((prev) => (prev - 1 + slideData.length) % slideData.length);
-  };
-
-  // Image slide variants matching left-to-center and right-to-center transitions
-  // We offset it by "80vw" (entering/exiting) which is the exact boundary of the mask container.
-  // This ensures the image stays completely transparent/clipped outside of the 80vw bounds.
-  const imageVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? "80vw" : "-80vw",
-      opacity: 0,
-      scale: 0.85,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        x: { type: "spring", stiffness: 100, damping: 20 },
-        opacity: { duration: 0.5 },
-        scale: { duration: 0.5 },
-      },
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? "-80vw" : "80vw",
-      opacity: 0,
-      scale: 0.85,
-      transition: {
-        x: { duration: 0.5, ease: "easeInOut" },
-        opacity: { duration: 0.4 },
-        scale: { duration: 0.4 },
-      },
-    }),
   };
 
   return (
@@ -178,14 +144,14 @@ export default function TopSellingSlider() {
         <div className="relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-0">
           
           {/* Left Column: Product Details (Fades only on transition) */}
-          <div className="w-full lg:w-[24%] lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 text-left space-y-4">
-            <AnimatePresence mode="wait">
+          <div className="w-full lg:w-[24%] lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 text-left space-y-4 relative">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={active.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-4"
               >
                 <h3 className="font-serif text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-none">
@@ -213,39 +179,70 @@ export default function TopSellingSlider() {
             </AnimatePresence>
           </div>
 
-          {/* Center Column: Sliding Product Image (Clips/masks outside 80vw) */}
-          <div className="relative w-[80vw] h-[40vh] md:h-[48vh] lg:h-[58vh] mx-auto overflow-hidden flex items-center justify-center z-10">
-            {/* Spotlight Radial Background Glow behind image */}
+          {/* Center Column: Sliding Product Image (Clips/masks outside 85vw) */}
+          <div className="relative w-[85vw] h-[40vh] md:h-[48vh] lg:h-[58vh] mx-auto overflow-hidden flex items-center justify-center z-10">
+            {/* Spotlight Radial Background Glow behind active image */}
             <div className="absolute w-72 h-72 rounded-full bg-[#C47A46]/10 blur-[80px] pointer-events-none" />
 
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={active.id}
-                custom={direction}
-                variants={imageVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="w-full h-full flex items-center justify-center select-none absolute inset-0"
-              >
-                <img
-                  src={active.image}
-                  alt={active.name}
-                  className="max-w-[70%] max-h-[85%] md:max-h-[90%] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)] filter contrast-[1.03]"
-                />
-              </motion.div>
-            </AnimatePresence>
+            {/* Loop through all slides to position them in 3-column slots */}
+            {slideData.map((slide, idx) => {
+              // Calculate adjusted distance in range [-2, 2] to find shortest path around array wrap-around
+              let dist = idx - current;
+              if (dist > 2) dist -= 5;
+              if (dist < -2) dist += 5;
+
+              const isActive = dist === 0;
+
+              // Translate each slide to its respective 1/3 column position inside the 85vw container
+              let xVal = "0%";
+              if (dist === -1) xVal = "-100%";
+              else if (dist === 1) xVal = "100%";
+              else if (dist === -2) xVal = "-200%";
+              else if (dist === 2) xVal = "200%";
+
+              return (
+                <motion.div
+                  key={slide.id}
+                  style={{
+                    position: "absolute",
+                    width: "33.33%",
+                    height: "100%",
+                    left: "33.33%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  animate={{
+                    x: xVal,
+                    opacity: isActive ? 1 : 0,
+                    scale: isActive ? 1 : 0.78,
+                    zIndex: isActive ? 10 : 5,
+                  }}
+                  transition={{
+                    duration: 0.65,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="select-none pointer-events-none"
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.name}
+                    className={`max-w-[85%] max-h-[85%] md:max-h-[90%] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)] filter contrast-[1.03] transition-all duration-300`}
+                  />
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Right Column: Specifications (Fades only on transition) */}
-          <div className="w-full lg:w-[24%] lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-20 text-left space-y-4 lg:space-y-6">
-            <AnimatePresence mode="wait">
+          <div className="w-full lg:w-[24%] lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-20 text-left space-y-4 lg:space-y-6 relative">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={active.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-4 lg:space-y-6"
               >
                 <div className="border-b border-white/10 pb-2">
@@ -306,7 +303,6 @@ export default function TopSellingSlider() {
               <button
                 key={idx}
                 onClick={() => {
-                  setDirection(idx > current ? 1 : -1);
                   setCurrent(idx);
                 }}
                 className={`w-2 h-2 rounded-full transition-all cursor-pointer ${

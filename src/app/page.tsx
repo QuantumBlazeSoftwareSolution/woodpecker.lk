@@ -114,26 +114,30 @@ export default function Home() {
         <div className="lg:col-span-7 flex flex-col gap-8">
           
           {/* Card 1 */}
-          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 aspect-[16/7] p-8 flex flex-col justify-center items-start shadow-sm">
-            <img src="/images/product_luxury.png" alt="Shou sugi ban" className="absolute right-0 top-0 h-full w-1/2 object-cover opacity-90 hidden sm:block" />
-            <div className="relative z-10 max-w-sm">
+          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 aspect-[16/7] grid grid-cols-12 shadow-sm">
+            <div className="col-span-12 sm:col-span-7 p-6 md:p-8 flex flex-col justify-center items-start z-10">
               <span className="text-[10px] text-warm-cedar uppercase tracking-wider font-bold">KINTSUGI RELIC SERIES</span>
               <h3 className="font-serif text-2xl font-bold text-[#261B14] mt-2 mb-4">Charred Carbon & Gold Infusions</h3>
               <Link href="/gallery" className="bg-[#261B14] text-white px-5 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase hover:bg-warm-cedar transition-colors inline-block">
                 Shop Collection
               </Link>
             </div>
+            <div className="col-span-5 relative h-full w-full hidden sm:block">
+              <img src="/images/product_luxury.png" alt="Shou sugi ban" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+            </div>
           </div>
 
           {/* Card 2 */}
-          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 aspect-[16/7] p-8 flex flex-col justify-center items-start shadow-sm">
-            <img src="/images/product_white.png" alt="Bleached board" className="absolute right-0 top-0 h-full w-1/2 object-cover opacity-90 hidden sm:block" />
-            <div className="relative z-10 max-w-sm">
+          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 aspect-[16/7] grid grid-cols-12 shadow-sm">
+            <div className="col-span-12 sm:col-span-7 p-6 md:p-8 flex flex-col justify-center items-start z-10">
               <span className="text-[10px] text-warm-cedar uppercase tracking-wider font-bold">MINIMAL OAK</span>
               <h3 className="font-serif text-2xl font-bold text-[#261B14] mt-2 mb-4">Bleached White Relief Waves</h3>
               <Link href="/gallery" className="bg-[#261B14] text-white px-5 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase hover:bg-warm-cedar transition-colors inline-block">
                 Shop Collection
               </Link>
+            </div>
+            <div className="col-span-5 relative h-full w-full hidden sm:block">
+              <img src="/images/product_white.png" alt="Bleached board" className="absolute inset-0 w-full h-full object-cover opacity-90" />
             </div>
           </div>
 
