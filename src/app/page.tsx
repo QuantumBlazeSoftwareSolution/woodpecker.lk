@@ -5,6 +5,7 @@ import { useCart } from "@/store/useCart";
 import { ArrowRight, ShoppingCart, Heart, Star, Shield, HelpCircle, Sparkles } from "lucide-react";
 import TopSellingSlider from "@/components/TopSellingSlider";
 import CustomerFeedback from "@/components/CustomerFeedback";
+import Hero3D from "@/components/Hero3D";
 
 export default function Home() {
   const { addToCart } = useCart();

@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WoodArtMesh from "./WoodArtMesh";
+import Logo3D from "./Logo3D";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +14,7 @@ export default function Hero3D() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<{ z: number }>({ z: 1.5 }); // Initial camera distance (macro view of wood grain)
+  const logoStateRef = useRef<{ scale: number; opacity: number }>({ scale: 1.0, opacity: 1.0 });
 
   useEffect(() => {
     if (!containerRef.current || !canvasRef.current || !cardRef.current) return;
@@ -38,6 +40,13 @@ export default function Hero3D() {
       // Camera zooms in to the wood art mesh texture
       tl.to(cameraRef.current, {
         z: 0.12,
+        ease: "power2.inOut",
+      }, 0);
+
+      // Fade out and scale down the 3D logo as we zoom in
+      tl.to(logoStateRef.current, {
+        scale: 0.0,
+        opacity: 0.0,
         ease: "power2.inOut",
       }, 0);
 
@@ -110,9 +119,20 @@ export default function Hero3D() {
                 animate();
               }}
             >
-              <ambientLight intensity={1.8} />
-              <directionalLight position={[3, 4, 5]} intensity={4.0} />
+              {/* Premium Multi-directional lighting setup for high-end gold reflections */}
+              <ambientLight intensity={1.2} />
+              
+              {/* Primary light from top right */}
+              <directionalLight position={[3, 4, 5]} intensity={3.5} castShadow />
+              
+              {/* Soft warm highlight from top-back-left to catch gold bevels */}
+              <directionalLight position={[-4, 5, -2]} intensity={2.0} color="#F5E3A9" />
+              
+              {/* Sparkling highlight from below */}
+              <pointLight position={[0, -2.5, 1.5]} intensity={2.5} color="#FFD700" />
+
               <Suspense fallback={null}>
+                <Logo3D animationState={logoStateRef.current} />
                 <WoodArtMesh cameraZ={cameraRef.current.z} />
               </Suspense>
             </Canvas>
