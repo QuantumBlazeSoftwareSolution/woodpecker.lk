@@ -7,9 +7,11 @@ import { useSplash } from "@/store/useSplash";
 import * as THREE from "three";
 
 export default function Logo3D({ 
-  animationState 
+  animationState,
+  isSplash = false
 }: { 
-  animationState?: { scale: number; opacity: number } 
+  animationState?: { scale: number; opacity: number };
+  isSplash?: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const { status } = useSplash();
@@ -45,7 +47,7 @@ export default function Logo3D({
     if (groupRef.current) {
       const elapsed = state.clock.getElapsedTime();
       
-      if (status === "exiting") {
+      if (isSplash && status === "exiting") {
         // Accelerate zoom and spin during exit transition
         exitProgress.current = Math.min(1, exitProgress.current + delta * 0.5); // Reaches 1 in exactly 2.0 seconds
         
@@ -123,7 +125,7 @@ export default function Logo3D({
   });
 
   return (
-    <group ref={groupRef} position={[0, status === "playing" || status === "exiting" ? 0.28 : 0.05, 0.3]} scale={[baseScale, -baseScale, baseScale]}>
+    <group ref={groupRef} position={[0, isSplash && (status === "playing" || status === "exiting") ? 0.28 : 0.05, 0.3]} scale={[baseScale, -baseScale, baseScale]}>
       {shapes.map((path, pathIndex) =>
         path.shapes.map((shape, shapeIndex) => (
           <mesh 

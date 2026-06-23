@@ -56,7 +56,7 @@ export default function WelcomeSplash() {
                 <directionalLight position={[-4, 5, -2]} intensity={2.0} color="#F5E3A9" />
                 <pointLight position={[0, -2.5, 1.5]} intensity={2.5} color="#FFD700" />
                 <Suspense fallback={null}>
-                  <Logo3D />
+                  <Logo3D isSplash={true} />
                 </Suspense>
               </Canvas>
             </div>
