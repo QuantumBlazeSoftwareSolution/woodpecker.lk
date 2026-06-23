@@ -6,6 +6,43 @@ import { ArrowRight, ShoppingCart, Heart, Star, Shield, HelpCircle, Sparkles } f
 import TopSellingSlider from "@/components/TopSellingSlider";
 import CustomerFeedback from "@/components/CustomerFeedback";
 import HeroAssembler from "@/components/HeroAssembler";
+import { motion } from "framer-motion";
+
+const categoriesContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const categoryItemVariants = {
+  hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.65,
+      ease: [0.16, 1, 0.3, 1] as const, // easeOutExpo
+    },
+  },
+};
+
+const promoCardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.75,
+      ease: [0.16, 1, 0.3, 1] as const, // easeOutExpo
+    },
+  },
+};
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -57,10 +94,22 @@ export default function Home() {
 
       {/* 2. Explore Collections Range (Circular Roundels Section) */}
       <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto border-b border-black/5">
-        <h2 className="text-center font-serif text-2xl md:text-3xl font-extrabold text-[#261B14] mb-10">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center font-serif text-2xl md:text-3xl font-extrabold text-[#261B14] mb-10"
+        >
           Explore Our Art Categories
-        </h2>
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        </motion.h2>
+        <motion.div 
+          variants={categoriesContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="flex flex-wrap items-center justify-center gap-8 md:gap-12"
+        >
           {[
             { name: "New Creations", image: "/images/product_luxury.png" },
             { name: "Teak Panels", image: "/images/product_brown.png" },
@@ -68,16 +117,18 @@ export default function Home() {
             { name: "Wall Racks", image: "/images/rack_brown.png" },
             { name: "Honeycomb Shelves", image: "/images/rack_white.png" },
           ].map((cat, idx) => (
-            <Link key={idx} href="/gallery" className="group flex flex-col items-center gap-3 text-center cursor-pointer">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border border-black/5 overflow-hidden shadow-md group-hover:scale-105 transition-transform duration-500">
-                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
-              </div>
-              <span className="font-sans text-xs font-bold text-[#261B14] tracking-wide group-hover:text-warm-cedar transition-colors">
-                {cat.name}
-              </span>
-            </Link>
+            <motion.div key={idx} variants={categoryItemVariants}>
+              <Link href="/gallery" className="group flex flex-col items-center gap-3 text-center cursor-pointer">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border border-black/5 overflow-hidden shadow-md group-hover:scale-105 transition-transform duration-500">
+                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
+                </div>
+                <span className="font-sans text-xs font-bold text-[#261B14] tracking-wide group-hover:text-warm-cedar transition-colors">
+                  {cat.name}
+                </span>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. Promo Banner Grid (Asymmetrical Layout matching image 2) */}
@@ -87,7 +138,13 @@ export default function Home() {
         <div className="lg:col-span-7 flex flex-col gap-8">
           
           {/* Card 1 */}
-          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 min-h-[180px] sm:min-h-0 sm:aspect-[16/7] grid grid-cols-12 shadow-sm">
+          <motion.div 
+            variants={promoCardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 min-h-[180px] sm:min-h-0 sm:aspect-[16/7] grid grid-cols-12 shadow-sm"
+          >
             <div className="col-span-12 sm:col-span-7 p-6 md:p-8 flex flex-col justify-center items-start z-10">
               <span className="text-[10px] text-warm-cedar uppercase tracking-wider font-bold">KINTSUGI RELIC SERIES</span>
               <h3 className="font-serif text-2xl font-bold text-[#261B14] mt-2 mb-4">Charred Carbon & Gold Infusions</h3>
@@ -98,10 +155,16 @@ export default function Home() {
             <div className="col-span-5 relative h-full w-full hidden sm:block">
               <img src="/images/product_luxury.png" alt="Shou sugi ban" className="absolute inset-0 w-full h-full object-cover opacity-90" />
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2 */}
-          <div className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 min-h-[180px] sm:min-h-0 sm:aspect-[16/7] grid grid-cols-12 shadow-sm">
+          <motion.div 
+            variants={promoCardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 min-h-[180px] sm:min-h-0 sm:aspect-[16/7] grid grid-cols-12 shadow-sm"
+          >
             <div className="col-span-12 sm:col-span-7 p-6 md:p-8 flex flex-col justify-center items-start z-10">
               <span className="text-[10px] text-warm-cedar uppercase tracking-wider font-bold">MINIMAL OAK</span>
               <h3 className="font-serif text-2xl font-bold text-[#261B14] mt-2 mb-4">Bleached White Relief Waves</h3>
@@ -112,12 +175,18 @@ export default function Home() {
             <div className="col-span-5 relative h-full w-full hidden sm:block">
               <img src="/images/product_white.png" alt="Bleached board" className="absolute inset-0 w-full h-full object-cover opacity-90" />
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
         {/* Right Column: Tall vertical banner */}
-        <div className="lg:col-span-5 relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 p-8 flex flex-col justify-end items-start shadow-sm min-h-[350px] sm:min-h-0 sm:aspect-[4/5] lg:aspect-auto">
+        <motion.div 
+          variants={promoCardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="lg:col-span-5 relative bg-[#F5F2EB] rounded-[2rem] overflow-hidden border border-black/5 p-8 flex flex-col justify-end items-start shadow-sm min-h-[350px] sm:min-h-0 sm:aspect-[4/5] lg:aspect-auto"
+        >
           <img src="/images/product_brown.png" alt="Natural teak" className="absolute inset-0 w-full h-full object-cover opacity-80" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
           
@@ -128,7 +197,7 @@ export default function Home() {
               Discover Now
             </Link>
           </div>
-        </div>
+        </motion.div>
 
       </section>
 

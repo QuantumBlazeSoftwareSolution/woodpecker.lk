@@ -61,34 +61,20 @@ export default function WelcomeSplash() {
               </Canvas>
             </div>
 
-            {/* Brand Reveal Text (Fades out and blurs as logo zooms in) */}
+            {/* Brand Reveal Text (Centered behind the 3D logo canvas, low-contrast subtle giant watermark) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={
                 status === "exiting"
-                  ? { opacity: 0, y: -45, filter: "blur(10px)" }
-                  : { opacity: 1, y: 0 }
+                  ? { opacity: 0, scale: 0.85, filter: "blur(15px)" }
+                  : { opacity: 1, scale: 1 }
               }
               transition={{ duration: 0.8, delay: 0.1, ease: "easeInOut" }}
-              className="absolute top-[74%] flex flex-col items-center text-center"
+              className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none select-none"
             >
-              <h1 
-                className="font-serif text-4xl md:text-7xl font-black tracking-[0.25em] uppercase leading-none mb-4"
-                style={{
-                  color: "#D4AF37", // Beautiful light gold/bronze
-                  textShadow: `
-                    -1px -1px 0px #FFF0C2,
-                    1px 1px 0px #4A331A,
-                    2px 2px 0px #3A2510,
-                    3px 3px 6px rgba(0, 0, 0, 0.9)
-                  ` // Premium chiseled/beveled 3D effect
-                }}
-              >
+              <h1 className="font-sans text-[12vw] md:text-[14vw] font-black tracking-[0.15em] uppercase text-white/[0.035] leading-none text-center">
                 Woodpecker
               </h1>
-              <p className="font-sans text-[9px] md:text-xs text-white/50 tracking-[0.4em] uppercase font-bold mt-1">
-                Bespoke Handmade Wood Wall Art
-              </p>
             </motion.div>
           </div>
         </motion.div>
