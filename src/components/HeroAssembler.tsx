@@ -166,7 +166,7 @@ export default function HeroAssembler() {
               <directionalLight position={[-4, 5, -2]} intensity={2.0} color="#F5E3A9" />
               <pointLight position={[0, -2.5, 1.5]} intensity={2.5} color="#FFD700" />
               <Suspense fallback={null}>
-                <Logo3D color="#FDFBF7" metalness={0.1} roughness={0.15} />
+                <Logo3D color="#D4A373" metalness={0.1} roughness={0.35} texturePath="/textures/satinwood_wave.png" />
               </Suspense>
             </Canvas>
           </div>
