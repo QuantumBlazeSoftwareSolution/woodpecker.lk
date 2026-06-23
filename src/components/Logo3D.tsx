@@ -8,10 +8,16 @@ import * as THREE from "three";
 
 export default function Logo3D({ 
   animationState,
-  isSplash = false
+  isSplash = false,
+  color = "#D4AF37",
+  metalness = 0.95,
+  roughness = 0.12
 }: { 
   animationState?: { scale: number; opacity: number };
   isSplash?: boolean;
+  color?: string;
+  metalness?: number;
+  roughness?: number;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const { status } = useSplash();
@@ -136,9 +142,9 @@ export default function Logo3D({
           >
             <extrudeGeometry args={[shape, extrudeSettings]} />
             <meshPhysicalMaterial
-              color="#D4AF37" // Beautiful metallic gold
-              metalness={0.95}
-              roughness={0.12}
+              color={color}
+              metalness={metalness}
+              roughness={roughness}
               clearcoat={1.0}
               clearcoatRoughness={0.05}
               reflectivity={1.0}

@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import CartDrawer from "@/components/CartDrawer";
 import WelcomeSplash from "@/components/WelcomeSplash";
+import Footer from "@/components/Footer";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -39,6 +40,7 @@ export default function RootLayout({
           <WelcomeSplash />
           <Header />
           <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
           <CartDrawer />
         </SmoothScroll>
       </body>
